@@ -1,9 +1,10 @@
-# MT5-MT4-Telegram-API-Bot
-MT5-MT4-Telegram-API-Bot is a Bot that communicates with Telegram, and copy all trades from one MT4 or MT5 terminal to Telegram Groups or channel - It support MQL4/MQL5 language.
-it delivers Trade Signal Alert From MT4 and MT5 Terminal to Telegram, EMail, or the notification terminal
+# About MT4-Telegram-Bot-Recon
+[Telegram](https://telegram.org/) isn't just for sending and receiving chat messages. It's also for automating your dialog flow, including work flow. Using a Telegram Bot gives you the ability to check prices, query status, manage trades, and even have a fun conversation. And if you're a serious crypto or forex trader, you can create your own Telegram Bot to manage your order flow.
+
+MT4-Telegram-Bot-Recon is an Expert Advisor that communicates with a Telegram Bot. You can use the Bot to query your orders from a Metatrader 4 ["MT4"] client. You can use this approach to manage your order flow, view account details, open and close orders, or even broadcast trade signals to a Telegram group or channel.
 
 
-# TODO
+# How to Create a New Telegram Bot
 * Search for a bot on telegram with name "@BotFather". We will find it through the search engine. After adding it to the list of contacts,
 we will start communicating with it using the /start command. As a response it will send you a list of all available commands, As shown in the image below
 ![pic1](https://user-images.githubusercontent.com/32399318/56162967-1fe7ed00-5fc5-11e9-9555-192c33b34d7f.jpg)
@@ -25,14 +26,27 @@ The other mode focuses on operation on a channel. Telegram channels are accounts
 
 ![pic5__2](https://user-images.githubusercontent.com/32399318/56163931-8241ed00-5fc7-11e9-99e4-96a879ae0b9a.jpg)
 
-
-* Export and copy all files from include to the MT4/MT5 include folder, input the api key from the bot to the Expert Advisor's token, add the bot as an administrator of your signal channel or Group, any event that happens on your trade terminal will be notify to instantly on your channel
-
+## Configuration of MT4 Client
+* Export and copy all files from include to the MT4 include folder, input the api key from the bot to the Expert Advisor's token, add the bot as an administrator of your signal channel or Group, any event that happens on your trade terminal will be notify to instantly on your channel
 
 ![mt4-telegram-signal-provider-screen-8054](https://user-images.githubusercontent.com/32399318/56166011-7147aa80-5fcc-11e9-9444-1bcaa574219e.jpg)
 
+## Example Bot Screenshot
 ![test1](https://user-images.githubusercontent.com/32399318/56165638-63ddf080-5fcb-11e9-9b88-5e9fb94821b6.jpg)
 
+# Example Usage
+
+In the following example, the default application will be created in the folder *myproject/*.
+
+    $ git clone https://github.com/dennislwm/MT4-Telegram-Bot-Recon.git myproject
+
+Copy all files in both *Experts/* and *Include/* to their respective MT4 folders.
+
+# Reach Out!
+
+Please consider giving this repository a star on GitHub.
+
+Alternatively, leave a comment on the tutorial [Building a Telegram Chat with a MT4 Forex Trading Expert Advisor](http://bit.ly/devto002).
 
 
 
