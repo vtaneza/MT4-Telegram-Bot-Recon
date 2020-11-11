@@ -20,6 +20,7 @@
   - [Example Bot Screenshot](#example-bot-screenshot)
 - [Example Usage](#example-usage)
 - [Reach Out!](#reach-out)
+- [References](#references)
 
 # About MT4-Telegram-Bot-Recon
 [Telegram](https://telegram.org/) isn't just for sending and receiving chat messages. It's also for automating your dialog flow, including work flow. Using a Telegram Bot gives you the ability to check prices, query status, manage trades, and even have a fun conversation. And if you're a serious crypto or forex trader, you can create your own Telegram Bot to manage your order flow.
@@ -71,6 +72,19 @@ Please consider giving this repository a star on GitHub.
 
 Alternatively, leave a comment on the tutorial [Building a Telegram Chat with a MT4 Forex Trading Expert Advisor](http://bit.ly/devto002).
 
+# References
+
+[MT5-MT4-Telegram-API-Bot](https://github.com/sholafalana/MT5-MT4-Telegram-API-Bot)
+ 
+[How to Create Bots for Telegram in MQL5](https://www.mql5.com/en/articles/2355)
+ 
+[Online JSON Stringify Text](https://onlinetexttools.com/json-stringify-text)
+
+[Postman - The Collaboration Platform for API Development](https://getpostman.com)
+
+[How to Build Telegram Chats with a Crypto-trading Bot](https://hackernoon.com/telegram-chats-with-a-crypto-trading-bot-znn6s3z2f)
+
+[Xypherian tutorial: Learn to use our crypto Telegram bot](https://xypher.io/Blog/P/1/xypherian-tutorial-learn-to-use-our-crypto-telegram-bot)
 
 
 
