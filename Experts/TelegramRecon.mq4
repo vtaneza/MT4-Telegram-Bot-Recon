@@ -40,12 +40,15 @@
 extern string s1="-->TGR Settings<--";
 extern string s1_1="Token - Telegram API Token";
 input string  TgrToken = "6853804731:AAFCUQRIiYsjkQYS_ryekWxzOljx51HaGKg";
+extern double Lots                       = 0.01;   // Default trade lot size for all entered trades
+extern int    CommandAttempts            = 5;      // Number of simultaneous attempts of sending broker requests (if some error occurs)
+extern int    MaxSlippage                = 10;     // Maximum slippage
+extern int    InitialMagic               = 123456;
 extern string IndD1="===Debug Properties===";
 extern bool   IndViewDebugNotify         = false;
 extern int    IndViewDebug               = 0;
 extern int    IndViewDebugNoStack        = 100;
 extern int    IndViewDebugNoStackEnd     = 10;
-extern int    InitialMagic = 123456;
 int IndDebugCrit=0;
 int IndDebugCore=1;
 int IndDebugFine=2;
@@ -58,6 +61,7 @@ string IndVer="0.9.0";
 //---- Assert variables for TGR
 CPlusBotRecon bot;
 int intResult;
+OrderParams orderParams;
 
 //|-----------------------------------------------------------------------------------------|
 //|                             I N I T I A L I Z A T I O N                                 |
@@ -69,6 +73,12 @@ int OnInit()
    
    bot.Token(TgrToken);
    intResult=bot.GetMe();
+
+//-- init params
+   orderParams.lot = Lots;
+   orderParams.command_attempts = CommandAttempts;
+   orderParams.max_slippage = MaxSlippage;
+   orderParams.initial_magic = InitialMagic;
   
 //--- create timer
    EventSetTimer(3);
@@ -107,7 +117,7 @@ void OnTimer()
    
    bot.GetUpdates();
    
-   bot.ProcessMessages();
+   bot.ProcessMessages(orderParams);
 }
   
 //|-----------------------------------------------------------------------------------------|

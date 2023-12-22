@@ -639,6 +639,7 @@ int MarketSend(int dir, double lots, double stop, double take, int magic_number)
    return (tick) ;
   }
 
+/*
 //+------------------------------------------------------------------+
 //|                                                                  |
 //+------------------------------------------------------------------+
@@ -655,3 +656,4 @@ int MyOrders()
      }
    return (num) ;
   }
+*/

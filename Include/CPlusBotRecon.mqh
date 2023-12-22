@@ -31,7 +31,6 @@
 //---- Assert Basic externs
 #include <PlusBotRecon.mqh>
 #include <Telegram.mqh>
-#include <TradeCmdsMql4.mqh>
 
 //|-----------------------------------------------------------------------------------------|
 //|                               M A I N   P R O C E D U R E                               |
@@ -39,7 +38,7 @@
 class CPlusBotRecon: public CCustomBot
 {
 public:
-   void ProcessMessages(void)
+   void ProcessMessages(OrderParams &params)
    {
       string msg=NL;
       const string strOrderTrade="/ordertrade";
@@ -149,6 +148,14 @@ public:
                      }
                   }
                   
+                  // prepare order info and a message to reply back to bot
+                  OrderInfo orderInfo;
+                  orderInfo.symbol = symbol;
+                  orderInfo.action = StrTradeActionToEnum(action);
+                  orderInfo.price = StringToDouble(entry);
+                  orderInfo.sl = StringToDouble(sl);
+                  orderInfo.tp_count = tp_count;
+
                   string sigmsg = NL;
                   sigmsg = StringConcatenate(sigmsg, "[TRADE ENTERED]", NL);
                   sigmsg = StringConcatenate(sigmsg, "SYMBOL: ", symbol, NL);
@@ -157,9 +164,25 @@ public:
                   sigmsg = StringConcatenate(sigmsg, "SL: ", sl, NL);
                   for (int l = 0; l < tp_count; l++) {
                      sigmsg = StringConcatenate(sigmsg, "TP", l + 1, ": ", tp[l], NL);
+                     orderInfo.tp[l] = StringToDouble(tp[l]);
                   }
-                  SendMessage( chat.m_id, sigmsg );
+                  PrintFormat("Reply to bot later: %s", sigmsg);
+
+                  // send order
+                  int ticket[20];
+                  int tickCount = CustomOrderSend(orderInfo, orderParams, ticket);
+                  if (tickCount > 0) {
+                     if (tickCount != tp_count) {
+                        sigmsg = StringConcatenate(sigmsg, "Note: not all entries were entered. Please check logs.", NL);
+                     }
+                     SendMessage(chat.m_id, sigmsg);
+                  }
                } while (false);
+            }
+
+            // handler for closing all trades
+            if( text=="/closeall" ) {
+               SendMessage( chat.m_id, BotCloseAllTrades(orderParams) );
             }
          }
       }

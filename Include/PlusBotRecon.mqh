@@ -139,6 +139,12 @@ string BotAccount(void)
    return( msg );
 }
 
+string BotCloseAllTrades(OrderParams &params)
+   {
+      CloseMarketOrders(params);
+      return "Closing all trades";
+   }
+
 
 //|-----------------------------------------------------------------------------------------|
 //|                           I N T E R N A L   F U N C T I O N S                           |
@@ -166,6 +172,7 @@ string strBotBln(string key, bool val)
    else        valType="false";
    return( StringConcatenate(NL,key,"=",valType) );
 }
+
 //|-----------------------------------------------------------------------------------------|
 //|                            E N D   O F   I N D I C A T O R                              |
 //|-----------------------------------------------------------------------------------------|
