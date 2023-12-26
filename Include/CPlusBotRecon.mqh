@@ -121,7 +121,7 @@ public:
                         StringToUpper(trimmed);
                         
                         if (StringFind(line_tokens[0], "SYMBOL") >= 0) {
-                           symbol = trimmed;
+                           symbol = GetBrokerSymbol(trimmed, params);
                         }
             	         if (StringFind(line_tokens[0], "ACTION") >= 0) {
                            action = trimmed;
@@ -171,6 +171,7 @@ public:
                   // send order
                   int ticket[20];
                   int tickCount = CustomOrderSend(orderInfo, orderParams, ticket);
+                  PrintFormat("Orders to enter: %d, Orders entered: %d, ", tp_count, tickCount);
                   if (tickCount > 0) {
                      if (tickCount != tp_count) {
                         sigmsg = StringConcatenate(sigmsg, "Note: not all entries were entered. Please check logs.", NL);
@@ -182,7 +183,18 @@ public:
 
             // handler for closing all trades
             if( text=="/closeall" ) {
-               SendMessage( chat.m_id, BotCloseAllTrades(orderParams) );
+               SendMessage( chat.m_id, BotCloseAllTrades(orderParams, ""));
+            }
+
+            // handler for closing all trades given a symbol
+            if (StringFind(text, "/closebysymbol") >= 0) {
+               string tokens[];
+               int count = StringSplit(text, StringGetCharacter(" ", 0), tokens);
+               if (count >= 2) {
+                  for (int i = 1; i < count; i++) {
+                     SendMessage(chat.m_id, BotCloseAllTrades(orderParams, tokens[i]));
+                  }
+               }
             }
          }
       }

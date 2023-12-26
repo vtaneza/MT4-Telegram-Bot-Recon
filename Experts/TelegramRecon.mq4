@@ -37,9 +37,11 @@
 //|-----------------------------------------------------------------------------------------|
 //|                           E X T E R N A L   V A R I A B L E S                           |
 //|-----------------------------------------------------------------------------------------|
-extern string s1="-->TGR Settings<--";
-extern string s1_1="Token - Telegram API Token";
+extern string s1 = "--> TGR Settings <--";
+extern string s1_1 = "Token - Telegram API Token";
 input string  TgrToken = "6853804731:AAFCUQRIiYsjkQYS_ryekWxzOljx51HaGKg";
+extern string s2 = "--> Order Params <--";
+extern string SymbolAlias = "GOLD=XAUUSD,SILVER=XAGUSD";
 extern double Lots                       = 0.01;   // Default trade lot size for all entered trades
 extern int    CommandAttempts            = 5;      // Number of simultaneous attempts of sending broker requests (if some error occurs)
 extern int    MaxSlippage                = 10;     // Maximum slippage
@@ -75,6 +77,7 @@ int OnInit()
    intResult=bot.GetMe();
 
 //-- init params
+   orderParams.symbol_alias = SymbolAlias;
    orderParams.lot = Lots;
    orderParams.command_attempts = CommandAttempts;
    orderParams.max_slippage = MaxSlippage;

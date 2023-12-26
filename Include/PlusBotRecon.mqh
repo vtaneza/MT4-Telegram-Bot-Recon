@@ -139,11 +139,25 @@ string BotAccount(void)
    return( msg );
 }
 
-string BotCloseAllTrades(OrderParams &params)
+string BotCloseAllTrades(OrderParams &params, string symbol)
+{
+   int ticketNumbers[];
+   int total = GetCurrentTradeTicketNumbers(ticketNumbers, symbol);
+   for(int i = 0; i < total; i++)
    {
-      CloseMarketOrders(params);
-      return "Closing all trades";
+      if(OrderSelect(ticketNumbers[i], SELECT_BY_TICKET) == false) 
+      {
+         PrintFormat("Failed in calling OrderSelect for ticket %d", ticketNumbers[i]);
+         continue;
+      }
+      OrderClose(OrderTicket(), OrderLots(), OrderOpenPrice(), params.max_slippage, Ask);
    }
+   string retStr = "Closing all trades";
+   if (StringLen(symbol) > 0) {
+      retStr = "Closing all trades for symbol " + symbol;
+   }
+   return retStr;
+}
 
 
 //|-----------------------------------------------------------------------------------------|
