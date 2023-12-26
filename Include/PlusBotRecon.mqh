@@ -139,7 +139,7 @@ string BotAccount(void)
    return( msg );
 }
 
-string BotCloseAllTrades(OrderParams &params, string symbol)
+string BotCloseAllTrades(OrderParams &params, string symbol, bool openTrades = true, bool pendingTrades = true)
 {
    int ticketNumbers[];
    int total = GetCurrentTradeTicketNumbers(ticketNumbers, symbol);
@@ -150,11 +150,39 @@ string BotCloseAllTrades(OrderParams &params, string symbol)
          PrintFormat("Failed in calling OrderSelect for ticket %d", ticketNumbers[i]);
          continue;
       }
-      OrderClose(OrderTicket(), OrderLots(), OrderOpenPrice(), params.max_slippage, Ask);
+      int orderType = OrderType();
+      int priceClose = Ask;
+      switch(orderType)
+      {
+         case TRADE_ACTION_BUY: // 0
+            priceClose = Bid;
+            break;
+         case TRADE_ACTION_SELL: // 1
+            priceClose = Ask;
+      }
+      if (orderType > TRADE_ACTION_SELL /* 0=BUY, 1=SELL */) {
+         if (pendingTrades) {
+            OrderDelete(OrderTicket());
+         }
+      } else {
+         if (openTrades) {
+            OrderClose(OrderTicket(), OrderLots(), OrderOpenPrice(), params.max_slippage, priceClose);
+         }
+      }
    }
-   string retStr = "Closing all trades";
+   string retStr = "Closing all";
+   if (openTrades) {
+      retStr = retStr + " open";
+   }
+   if (pendingTrades) {
+      if (openTrades) {
+         retStr = retStr + " and";
+      }
+      retStr = retStr + " pending";
+   }
+   retStr = retStr + " trades";
    if (StringLen(symbol) > 0) {
-      retStr = "Closing all trades for symbol " + symbol;
+      retStr = retStr + " for symbol " + symbol;
    }
    return retStr;
 }

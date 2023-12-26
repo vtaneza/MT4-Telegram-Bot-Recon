@@ -181,13 +181,13 @@ public:
                } while (false);
             }
 
-            // handler for closing all trades
-            if( text=="/closeall" ) {
+            // handler for closing all trades (open + pending)
+            if (text == "/closeall") {
                SendMessage( chat.m_id, BotCloseAllTrades(orderParams, ""));
             }
 
-            // handler for closing all trades given a symbol
-            if (StringFind(text, "/closebysymbol") >= 0) {
+            // handler for closing all trades (open + pending) given a symbol
+            if (StringFind(text, "/closeallbysymbol") >= 0) {
                string tokens[];
                int count = StringSplit(text, StringGetCharacter(" ", 0), tokens);
                if (count >= 2) {
@@ -196,6 +196,39 @@ public:
                   }
                }
             }
+
+            // handler for closing all open trades only
+            if (text == "/closeallopen") {
+               SendMessage(chat.m_id, BotCloseAllTrades(orderParams, "", true, false));
+            }
+
+            // handler for closing all open trades by symbol
+            if (StringFind(text, "/closeallopenbysymbol") >=0) {
+               string tokens[];
+               int count = StringSplit(text, StringGetCharacter(" ", 0), tokens);
+               if (count >= 2) {
+                  for (int i = 1; i < count; i++) {
+                     SendMessage(chat.m_id, BotCloseAllTrades(orderParams, tokens[i], true, false));
+                  }
+               }
+            }
+
+            // handler for closing all pending trades only
+            if (text == "/closeallpending") {
+               SendMessage(chat.m_id, BotCloseAllTrades(orderParams, "", false, true));
+            }
+
+            // handler for closing all pending trades by symbol
+            if (StringFind(text, "/closeallpendingbysymbol") >=0) {
+               string tokens[];
+               int count = StringSplit(text, StringGetCharacter(" ", 0), tokens);
+               if (count >= 2) {
+                  for (int i = 1; i < count; i++) {
+                     SendMessage(chat.m_id, BotCloseAllTrades(orderParams, tokens[i], false, true));
+                  }
+               }
+            }
+
          }
       }
    }
